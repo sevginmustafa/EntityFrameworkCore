@@ -14,11 +14,7 @@ namespace _06.RemoveVillain
 
             using (connection)
             {
-<<<<<<< HEAD
                 SqlCommand checkIfVillainExists = new SqlCommand(@"SELECT Name FROM Villains WHERE Id = @villainId", connection);
-=======
-                SqlCommand checkIfVillainExists = new SqlCommand(@"SELECT Id FROM Villains WHERE Id = @villainId", connection);
->>>>>>> b5a5852dab3067d35185a8c19bba6ee94e877a3e
                 checkIfVillainExists.Parameters.AddWithValue("@villainId", inputId);
 
                 string villainName = (string)checkIfVillainExists.ExecuteScalar();
