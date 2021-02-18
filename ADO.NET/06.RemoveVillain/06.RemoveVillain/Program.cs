@@ -14,26 +14,24 @@ namespace _06.RemoveVillain
 
             using (connection)
             {
-                SqlCommand checkIfVillainExists = new SqlCommand(@"SELECT * FROM Villains WHERE Id = @villainId", connection);
+                SqlCommand checkIfVillainExists = new SqlCommand(@"SELECT Name FROM Villains WHERE Id = @villainId", connection);
                 checkIfVillainExists.Parameters.AddWithValue("@villainId", inputId);
 
-                int? villainId = (int?)checkIfVillainExists.ExecuteScalar();
+                string villainName = (string)checkIfVillainExists.ExecuteScalar();
 
-                if (villainId == null)
+                if (villainName == null)
                 {
                     Console.WriteLine("No such villain was found.");
                     return;
                 }
 
-                SqlCommand getVillinName = new SqlCommand($@"SELECT Name FROM Villains WHERE Id = '{inputId}'", connection);
-
-                string villainName = (string)getVillinName.ExecuteScalar();
-
-                SqlCommand deleteVillainMinions = new SqlCommand($@"DELETE FROM MinionsVillains WHERE VillainId = '{inputId}'", connection);
+                SqlCommand deleteVillainMinions = new SqlCommand(@"DELETE FROM MinionsVillains WHERE VillainId = @villainId", connection);
+                deleteVillainMinions.Parameters.AddWithValue("@villainId", inputId);
 
                 int countMinions = deleteVillainMinions.ExecuteNonQuery();
 
-                SqlCommand deleteVillain = new SqlCommand($@"DELETE FROM Villains WHERE Id = '{inputId}'", connection);
+                SqlCommand deleteVillain = new SqlCommand($@"DELETE FROM Villains WHERE Id = @villainId", connection);
+                deleteVillain.Parameters.AddWithValue("@villainId", inputId);
 
                 deleteVillain.ExecuteNonQuery();
 
