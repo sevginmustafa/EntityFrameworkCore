@@ -1,2 +1,2 @@
 # EntityFrameworkCore
-Entity Framework Core Course fro
+Entity Framework Core Course f
