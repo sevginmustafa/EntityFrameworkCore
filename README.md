@@ -1,2 +1,2 @@
 # EntityFrameworkCore
-Entity
+Enti
