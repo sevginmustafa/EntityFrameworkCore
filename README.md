@@ -1,2 +1,2 @@
 # EntityFrameworkCore
-Entity Framework Core Course from February 2021 at Sof
+Entity Framework Core Course from February 2021 at S
