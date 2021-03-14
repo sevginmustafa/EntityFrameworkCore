@@ -1,2 +1,2 @@
 # EntityFrameworkCore
-Entity Framework Core Course from February
+Entity Framework Core Course from Febr
