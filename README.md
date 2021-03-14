@@ -1,2 +1,2 @@
 # EntityFrameworkCore
-Entity Framewo
+Entity Fra
