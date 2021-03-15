@@ -1,2 +1,2 @@
 # EntityFrameworkCore
-Entity Framework Core C
+Entity Framework C
