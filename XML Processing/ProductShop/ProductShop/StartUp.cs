@@ -1,8 +1,8 @@
 ﻿using ProductShop.Data;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using System.IO;
 using System;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using ProductShop.Dtos.Import;
@@ -58,8 +58,8 @@ namespace ProductShop
 
 
             //08.Export Users and Products
-            var result = GetUsersWithProducts(context);
-            File.WriteAllText("../../../Datasets/Results/users-and-products.xml", result);
+            //var result = GetUsersWithProducts(context);
+            //File.WriteAllText("../../../Datasets/Results/users-and-products.xml", result);
         }
 
 
@@ -218,7 +218,7 @@ namespace ProductShop
         }
 
 
-        //08. Export Users and Products
+        //08. Export Users and Products--for this problem i used Lazy Loading because of Judge
         public static string GetUsersWithProducts(ProductShopContext context)
         {
             var namespaces = new XmlSerializerNamespaces();
