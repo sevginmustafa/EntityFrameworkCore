@@ -3,10 +3,12 @@ using RealEstates.Models;
 using RealEstates.Services.DTOs;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace RealEstates.Services
 {
-    public class PropertiesService : IPropertiesService
+    public class PropertiesService : BaseService, IPropertiesService
     {
         private readonly RealEstatesDbContext context;
 
@@ -69,19 +71,20 @@ namespace RealEstates.Services
             .Where(x => x.Price.HasValue && x.DistrictId == districtId)
             .Average(x => (decimal)x.Size);
 
+        public IEnumerable<PropertyFullInfoDTO> GetPropertyFullData(int count)
+        => context.Properties
+            .Where(x => x.Price.HasValue && x.Year.HasValue)
+            .ProjectTo<PropertyFullInfoDTO>(Mapper.ConfigurationProvider)
+            .Take(count)
+            .ToArray();
+
+
         public IEnumerable<PropertyInfoDto> Search(int minPrice, int maxPrice, int minSize, int maxSize)
         {
             var properties = context.Properties
                 .Where(x => x.Price >= minPrice && x.Price <= maxPrice && x.Size >= minSize && x.Size <= maxSize)
-                .Select(x => new PropertyInfoDto
-                {
-                    DistrictName = x.District.Name,
-                    Size = x.Size,
-                    Price = x.Price ?? 0,
-                    PropertyType = x.PropertyType.Name,
-                    BuildingType = x.BuildingType.Name
-                })
-                .ToList();
+                .ProjectTo<PropertyInfoDto>(Mapper.ConfigurationProvider)
+                .ToArray();
 
             return properties;
         }

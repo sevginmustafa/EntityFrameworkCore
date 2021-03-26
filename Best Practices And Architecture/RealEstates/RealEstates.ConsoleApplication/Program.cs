@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstates.Data;
 using RealEstates.Services;
+using RealEstates.Services.DTOs;
 using System;
+using System.IO;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace RealEstates.ConsoleApplication
 {
@@ -26,6 +29,7 @@ namespace RealEstates.ConsoleApplication
                 Console.WriteLine("3. Average price per square meter");
                 Console.WriteLine("4. Add tag");
                 Console.WriteLine("5. Add tags to properties");
+                Console.WriteLine("6. Property Full Info");
                 Console.WriteLine("0. EXIT");
 
                 int option = int.Parse(Console.ReadLine());
@@ -58,7 +62,7 @@ namespace RealEstates.ConsoleApplication
                     }
                     else if (option == 6)
                     {
-
+                        GetPropertyFullInfo(context);
                     }
 
                     Console.WriteLine("Press any key to continue...");
@@ -67,11 +71,29 @@ namespace RealEstates.ConsoleApplication
             }
         }
 
+        private static void GetPropertyFullInfo(RealEstatesDbContext context)
+        {
+            Console.WriteLine("Count:");
+            int count = int.Parse(Console.ReadLine());
+            IPropertiesService propertiesService = new PropertiesService(context);
+            var properties = propertiesService.GetPropertyFullData(count);
+
+            var serializee = new XmlSerializer(typeof(PropertyFullInfoDTO[]), new XmlRootAttribute("Properties"));
+
+            var writer = new StringWriter();
+
+            serializee.Serialize(writer, properties);
+
+            Console.WriteLine(writer.ToString());
+
+            writer.Close();
+        }
+
         private static void AddTagsToProperty(RealEstatesDbContext context)
         {
             Console.WriteLine("Adding tags to properties started!");
             IPropertiesService propertiesService = new PropertiesService(context);
-            ITagsService tagsService = new TagsService(context,propertiesService);
+            ITagsService tagsService = new TagsService(context, propertiesService);
             tagsService.BulkAddTagsToProperty();
             Console.WriteLine("Adding tags to properties finished!");
         }
@@ -111,10 +133,15 @@ namespace RealEstates.ConsoleApplication
 
             var properties = propertiesService.Search(minPrice, maxPrice, minSize, maxSize);
 
-            foreach (var property in properties)
-            {
-                Console.WriteLine($"{property.DistrictName} => {property.Size} => {property.Price} => {property.PropertyType} => {property.BuildingType}");
-            }
+            var writer = new StringWriter();
+
+            var serializer = new XmlSerializer(typeof(PropertyInfoDto[]), new XmlRootAttribute("Properties"));
+
+            serializer.Serialize(writer, properties);
+
+            Console.WriteLine(writer.ToString());
+
+            writer.Close();
         }
 
         private static void SearchMostExpensiveDistricts(RealEstatesDbContext context)
@@ -126,10 +153,15 @@ namespace RealEstates.ConsoleApplication
 
             var districts = districtsService.MostExpensiveDistricts(count);
 
-            foreach (var district in districts)
-            {
-                Console.WriteLine($"{district.Name} => {district.AveragePricePerSquareMeter:f2}€/m²({district.PropertiesCount})");
-            }
+            var writer = new StringWriter();
+
+            var serializer = new XmlSerializer(typeof(DistrictInfoDTO[]), new XmlRootAttribute("Districts"));
+
+            serializer.Serialize(writer, districts);
+
+            Console.WriteLine(writer.ToString());
+
+            writer.Close();
         }
     }
 }
