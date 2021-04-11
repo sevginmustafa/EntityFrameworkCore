@@ -1,2 +1,2 @@
 # EntityFrameworkCore
-Entity Framework Core Course from Febru
+Entity Framework Core Cou
