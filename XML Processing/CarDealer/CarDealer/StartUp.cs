@@ -18,56 +18,45 @@ namespace CarDealer
 
             //context.Database.EnsureCreated();
 
-
             //09. Import Suppliers
             //var inputXml = File.ReadAllText("../../../Datasets/suppliers.xml");
             //Console.WriteLine(ImportSuppliers(context, inputXml));
-
 
             //10. Import Parts
             //var inputXml = File.ReadAllText("../../../Datasets/parts.xml");
             //Console.WriteLine(ImportParts(context, inputXml));
 
-
             //11. Import Cars
             //var inputXml = File.ReadAllText("../../../Datasets/cars.xml");
             //Console.WriteLine(ImportCars(context, inputXml));
-
 
             //12.Import Customers
             //var inputXml = File.ReadAllText("../../../Datasets/customers.xml");
             //Console.WriteLine(ImportCustomers(context, inputXml));
 
-
             //13. Import Sales
             //var inputXml = File.ReadAllText("../../../Datasets/sales.xml");
             //Console.WriteLine(ImportSales(context, inputXml));
-
 
             //14. Export Cars With Distance
             //var result = GetCarsWithDistance(context);
             //File.WriteAllText("../../../Datasets/Results/cars.xml", result);
 
-
             //15. Export Cars From Make BMW
             //var result = GetCarsFromMakeBmw(context);
             //File.WriteAllText("../../../Datasets/Results/bmw-cars.xml", result);
-
 
             //16. Export Local Suppliers 
             //var result = GetLocalSuppliers(context);
             //File.WriteAllText("../../../Datasets/Results/local-suppliers.xml", result);
 
-
             //17. Export Cars With Their List Of Parts
             //var result = GetCarsWithTheirListOfParts(context);
             //File.WriteAllText("../../../Datasets/Results/cars-and-parts.xml", result);
 
-
             //18.Export Total Sales By Customer             
             var result = GetTotalSalesByCustomer(context);
             File.WriteAllText("../../../Datasets/Results/customers-total-sales.xml", result);
-
 
             //19. Export Sales With Applied Discount
             //var result = GetSalesWithAppliedDiscount(context);
